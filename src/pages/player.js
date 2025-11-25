@@ -32,8 +32,10 @@ const Player = async () => {
   // console.log(res);
 
   const data = res.data;
+  console.log(data.videoId);
 
   const tracks = checkTracks(data);
+  console.log(tracks);
 
   return `
     <div class="bg-black text-white font-sans w-screen mx-auto mt-[45px] h-[530px] mr-10">
