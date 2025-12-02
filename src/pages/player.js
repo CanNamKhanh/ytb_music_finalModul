@@ -30,9 +30,8 @@ const Player = async () => {
   const res = await checkData(path[1]);
   // console.log(data.data);
   // console.log(res);
-
   const data = res.data;
-  console.log(data.videoId);
+  // console.log(data.videoId);
 
   const tracks = checkTracks(data);
   console.log(tracks);
@@ -61,7 +60,7 @@ const Player = async () => {
                           item.audioUrl
                         }" data-img="${item.thumbnails[0]}" data-title="${
                           item.title
-                        }" data-artist="${item.artists[0]}">
+                        }" data-artist="${checkArtists(data)}">
                         <img src="${
                           item.thumbnails[0]
                         }" class="w-10 h-10 rounded object-cover">

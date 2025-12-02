@@ -27,6 +27,12 @@ import SlugPage, {
 } from "../pages/slugPage";
 import SlugLayout from "../pages/slugLayout";
 import Player, { setupPlayerEvents } from "../pages/player";
+import Login, { loginActive } from "../pages/login";
+import Register, { registerAction } from "../pages/register";
+import UserInfo from "../pages/userInfo";
+import { logout } from "../utils/httpRequest";
+import UpdateUserInfo, { updateSubmit } from "../pages/updateUserInfo";
+import ChangePassword, { changeSubmit } from "../pages/changePass";
 
 const router = new Navigo("/");
 
@@ -80,6 +86,38 @@ const initeRouter = async () => {
     .on("/player/:slug", async () => {
       document.querySelector(".js-body").innerHTML = await Player();
       setupPlayerEvents();
+    })
+    .on("/login", async () => {
+      document.querySelector(".js-body").innerHTML = Login();
+      await loginActive();
+    })
+    .on("/register", async () => {
+      document.querySelector(".js-body").innerHTML = Register();
+      await registerAction();
+    })
+    .on("/user-info", async () => {
+      document.querySelector(".js-body").innerHTML = await UserInfo();
+      // LOGOUT BTN
+      const logoutBtn = document.querySelector(".js-logout-btn");
+      logoutBtn.addEventListener("click", () => {
+        logout();
+      });
+    })
+    .on("/update-info", async () => {
+      document.querySelector(".js-body").innerHTML = await UpdateUserInfo();
+      const logoutBtn = document.querySelector(".js-logout-btn");
+      logoutBtn.addEventListener("click", () => {
+        logout();
+      });
+      await updateSubmit();
+    })
+    .on("/change-pass", async () => {
+      document.querySelector(".js-body").innerHTML = await ChangePassword();
+      const logoutBtn = document.querySelector(".js-logout-btn");
+      logoutBtn.addEventListener("click", () => {
+        logout();
+      });
+      await changeSubmit();
     })
     .resolve();
 };

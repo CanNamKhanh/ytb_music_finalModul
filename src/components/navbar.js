@@ -28,20 +28,33 @@ const NavBar = () => {
             </div>
             <div class="js-auth -mt-5 w-[90%]">
                 <a href="/login" data-navigo>
-                  <div class="js-wrapper text-white text-center cursor-pointer hover:bg-gray-500 rounded-[5px] p-4">
+                  <div class="js-wrapper js-login-icon text-white text-center cursor-pointer hover:bg-gray-500 rounded-[5px] p-4">
                       <i class="fa-solid fa-address-card text-2xl"></i>
                       <p class="text-[10px]">Log in</p>
                   </div>
                 </a>
-                <div class="js-login-btn hidden">
+                <a href="/login" class="js-login-btn hidden">
                     <button class="rounded-[99999px] bg-[#363636] cursor-pointer w-full py-2 hover:bg-gray-500 text-white">Log in</button>
                     <p class="js-des text-gray-200 text-[12px] leading-6 mt-1">Sign in to create and share playlists, get personalized content recommendations, and more.</p>
-                </div>
+                </a>
             </div>
         </div>`;
 };
 
 export default NavBar;
+
+export const renderProfileNavbar = async () => {
+  const loginBtn = document.querySelector(".js-login-btn");
+  const loginIcon = document.querySelector(".js-login-icon");
+  const pagesMenu = document.querySelector(".js-pages");
+
+  if (localStorage.getItem("access_token")) {
+    loginBtn.classList.add("hidden");
+    loginIcon.classList.add("opacity-0");
+    pagesMenu.classList.remove("border-b");
+    pagesMenu.classList.remove("border-b-gray-500");
+  }
+};
 
 export const renderNavbar = () => {
   const openMenuEl = document.querySelector(".fa-bars");
@@ -49,11 +62,6 @@ export const renderNavbar = () => {
     // Navbar Width
     const navBar = document.querySelector(".js-navbar");
     navBar.classList.toggle("w-60");
-
-    // Upgrade Page
-    // navBar.classList.toggle("hidden");
-    // const overlay = document.querySelector(".js-overlay");
-    // overlay.classList.toggle("hidden");
 
     // Search Box Margin
     const searchBox = document.querySelector(".js-search");
@@ -91,7 +99,10 @@ export const renderNavbar = () => {
     // Login BTN
     const loginBtn = document.querySelector(".js-login-btn");
     loginBtn.classList.toggle("hidden");
-    loginBtn.classList.toggle("block");
+
+    if (localStorage.getItem("access_token")) {
+      loginBtn.classList.add("hidden");
+    }
   });
 };
 

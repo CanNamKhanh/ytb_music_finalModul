@@ -1,3 +1,4 @@
+import { saveToken } from "../pages/login";
 import { axiosInstance } from "./axios";
 
 const BASE_URL = import.meta.env.VITE_BASE_URL;
@@ -239,5 +240,194 @@ export const getPlaylistDetail = async (slug) => {
     return data;
   } catch {
     return null;
+  }
+};
+
+// AUTH REGISTER
+export const authRegister = async (name, email, password, confirmPassword) => {
+  try {
+    const res = await axiosInstance.post("/auth/register", {
+      name,
+      email,
+      password,
+      confirmPassword,
+    });
+    // console.log(res.data);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    return null;
+  }
+};
+
+// AUTH LOGIN
+export const authLogin = async (email, password) => {
+  try {
+    const res = await axiosInstance.post("/auth/login", {
+      email,
+      password,
+    });
+    // console.log(res.data);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+    alert("Sai tài khoản hoặc mật khẩu, vui lòng kiểm tra lại!");
+    return null;
+  }
+};
+
+// REMOVE TOKEN
+const removeToken = () => {
+  localStorage.removeItem("access_token");
+  localStorage.removeItem("refresh_token");
+};
+// LOG OUT
+export const logout = async () => {
+  removeToken();
+  try {
+    const accessToken = getAccessToken();
+    const res = await axiosInstance.delete("/auth/logout", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    console.log(res);
+    return res;
+  } catch (err) {
+    console.log(err);
+  }
+  window.location.href = "/";
+};
+
+// GET PROFILE
+let refreshTokenPromise = null;
+const getAccessToken = () => {
+  const accessToken = localStorage.getItem("access_token");
+  return accessToken;
+};
+export const getProfile = async () => {
+  try {
+    const accessToken = getAccessToken();
+    const res = await axiosInstance.get("/auth/me", {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+    // console.log(res.data);
+    return res.data;
+  } catch (err) {
+    if (!refreshTokenPromise) {
+      refreshTokenPromise = getNewToken();
+    }
+    const newToken = await refreshTokenPromise;
+    if (newToken) {
+      saveToken(newToken);
+      getProfile();
+    } else {
+      logout();
+    }
+  }
+};
+
+// GET NEW TOKEN
+const getRefreshToken = () => {
+  const refreshToken = localStorage.getItem("refresh_token");
+  return refreshToken;
+};
+export const getNewToken = async () => {
+  try {
+    const refreshToken = getRefreshToken();
+
+    const res = await axiosInstance.post("/auth/refresh-token", {
+      refreshToken: refreshToken,
+    });
+    return res.data;
+  } catch (err) {
+    // alert(err);
+    console.log(err);
+  }
+};
+
+// UPDATE INFO
+export const updateInfo = async (name, email) => {
+  try {
+    const accessToken = getAccessToken();
+    const res = await axiosInstance.patch(
+      "/auth/me",
+      {
+        name,
+        email,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    console.log(res.data);
+
+    // RELOAD
+    const status = res.data.message;
+    if (status === "Update profile successfuly") {
+      alert("Cập nhật thông tin thành công");
+    }
+    // location.reload();
+    window.location.href = "/user-info";
+    return res.data;
+  } catch (err) {
+    // console.log(err);
+    alert("Cập nhật thông tin thất bại");
+  }
+};
+
+// UPDATE PASSWORD
+export const changePassword = async (
+  oldPassword,
+  password,
+  confirmPassword
+) => {
+  try {
+    const accessToken = getAccessToken();
+    const res = await axiosInstance.patch(
+      "/auth/change-password",
+      {
+        oldPassword,
+        password,
+        confirmPassword,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+    // console.log(res.data);
+
+    // RELOAD;
+    const status = res.data.message;
+    if (status === "Change password successfuly") {
+      alert("Thay đổi mật khẩu thành công");
+    }
+    window.location.href = "/user-info";
+
+    return res.data;
+  } catch (err) {
+    // console.log(err);
+    alert(
+      "Thay đổi mật khẩu thất bại, vui lòng kiểm tra lại mật khẩu hiện tại hoặc mật khẩu mới!"
+    );
+  }
+};
+
+// GET SEARCH SUGGESTION
+export const getSearchSuggestion = async (searchContent) => {
+  try {
+    const res = await axiosInstance.get(
+      `/search/suggestions?q=${searchContent}`
+    );
+    // console.log(res.data);
+    return res.data;
+  } catch (err) {
+    console.log(err);
   }
 };

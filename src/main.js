@@ -10,13 +10,16 @@ await render();
 await initeRouter();
 
 //HEADER
-import { renderHeader } from "./components/header";
+import { renderHeader, renderProfile, searchActive } from "./components/header";
 renderHeader();
+renderProfile();
+searchActive();
 //END HEADER
 
 //NAVBAR
-import { renderNavbar } from "./components/navbar";
+import { renderNavbar, renderProfileNavbar } from "./components/navbar";
 renderNavbar();
+renderProfileNavbar();
 //END NAVBAR
 
 //UPGRADE PAGE
