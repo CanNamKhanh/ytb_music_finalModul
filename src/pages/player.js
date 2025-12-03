@@ -85,10 +85,12 @@ const Player = async () => {
                     </div>
                 </div>
             </div>
-                <div class="h-24 border-t border-gray-800 p-4 bg-gray-950 flex items-center gap-4 fixed w-screen bottom-0 left-0">
+                <div class="z-9999999999999 h-24 border-t border-gray-800 p-4 bg-gray-950 flex items-center gap-4 fixed w-screen bottom-0 left-0">
                     <!-- Left: Song Info -->
                     <div class="w-72 flex items-center gap-3">
-                        <img src="" class="w-14 h-14 rounded object-cover">
+                        <img src="${
+                          data.thumbnails[0]
+                        }" class="w-14 h-14 rounded object-cover">
                         <div class="flex-1">
                             <div class="text-sm font-medium truncate">${
                               data.title
@@ -121,8 +123,10 @@ const Player = async () => {
 
                     <!-- Volumn section -->
                     <div class="w-72 flex items-center justify-end gap-3">
-                        <span class="text-lg cursor-pointer"><i class="fa-solid fa-volume-high"></i></span>
-                        <div class="w-24 h-1 bg-gray-700 rounded cursor-pointer"></div>
+                        <span class="volume-icon text-lg cursor-pointer"><i class="fa-solid fa-volume-high"></i></span>
+                        <div class="volume-line w-24 h-1 bg-gray-700 rounded cursor-pointer">
+                            <div class="volume-bar h-full bg-red-500 rounded" style="width: 100%"></div>
+                        </div>
                     </div>
                     <audio id="audioPlayer"></audio>
                 </div>
@@ -184,6 +188,48 @@ export const setupPlayerEvents = () => {
   audio.addEventListener("pause", () => {
     playBtn.classList.replace("fa-pause", "fa-play");
   });
+
+  // VOLUME
+  const volumeLine = document.querySelector(".volume-line");
+  const volumeBar = document.querySelector(".volume-bar");
+  const volumeIcon = document.querySelector(".volume-icon i");
+
+  audio.volume = 1;
+
+  volumeLine.addEventListener("click", (e) => {
+    const rect = volumeLine.getBoundingClientRect();
+    const pos = e.clientX - rect.left;
+    const percent = pos / rect.width;
+
+    audio.volume = Math.min(1, Math.max(0, percent));
+    volumeBar.style.width = audio.volume * 100 + "%";
+
+    renderVolumeIcon();
+  });
+
+  // MUTE
+  volumeIcon.addEventListener("click", () => {
+    audio.muted = !audio.muted;
+
+    if (audio.muted) {
+      volumeBar.style.width = "0%";
+    } else {
+      volumeBar.style.width = audio.volume * 100 + "%";
+    }
+
+    renderVolumeIcon();
+  });
+
+  // RENDER ICON
+  const renderVolumeIcon = () => {
+    if (audio.muted || audio.volume === 0) {
+      volumeIcon.className = "fa-solid fa-volume-xmark";
+    } else if (audio.volume < 0.5) {
+      volumeIcon.className = "fa-solid fa-volume-low";
+    } else {
+      volumeIcon.className = "fa-solid fa-volume-high";
+    }
+  };
 
   //TIME LINE
   audio.addEventListener("timeupdate", () => {

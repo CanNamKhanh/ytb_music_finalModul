@@ -11,14 +11,16 @@ const Header = () => {
                     <img class="logo style-scope ytmusic-logo cursor-pointer" alt="" src="//music.youtube.com/img/on_platform_logo_dark.svg">
                 </a>
               </div>
-                <div class="js-search ml-3 left-40 border border-gray-400 rounded-[7px] w-[480px] fixed bg-[#3a3939] items-center flex hover:text-white flex-col">
+                <div class="js-search ml-10 left-40 border border-gray-400 rounded-[7px] w-[480px] fixed bg-[#3a3939] items-center flex hover:text-white flex-col">
                     <div class="js-input border-b border-b-gray-500">
                         <i class="fa-solid fa-magnifying-glass py-[11px] mx-3 cursor-pointer text-gray-400" title="Initiate search"></i>
                         <input type="text" placeholder="Search songs, albums, artists, podcast" class="w-[380px] placeholder-gray-400 h-9 outline-none text-white!">
                         <i class="fa-solid fa-x mx-3 cursor-pointer text-gray-400 text-[11px] opacity-0"></i>
                     </div>
-                    <div class="js-search-suggest-content"></div>
-                    <div class="js-search-suggest text-white w-full"></div>
+                    
+                    <div class="js-search-suggest bg-black text-white w-full">
+                      
+                    </div>
                 </div>
             </div>
             <div class="auth-service text-white flex justify-center items-center gap-3 mr-30">
@@ -79,7 +81,7 @@ export const renderHeader = () => {
       searchIcon.classList.replace("text-white", "text-gray-300");
     }
   });
-  inputEl.addEventListener("blur", (e) => {
+  inputEl.addEventListener("blur", () => {
     inputBoxEl.classList.remove("bg-black");
     searchIcon.classList.replace("text-white", "text-gray-300");
     // document.querySelector(".js-search-suggest").classList.add("hidden");
@@ -194,29 +196,45 @@ export const searchActive = async () => {
   searchInputBox.addEventListener(
     "input",
     debounce(async (e) => {
-      const searchInputValue = document.querySelector(".js-input input").value;
+      const searchInputValue = document
+        .querySelector(".js-input input")
+        .value.trim();
       // console.log(searchInputValue);
       const res = await getSearchSuggestion(searchInputValue);
       console.log(res);
       const searchSuggestion = document.querySelector(".js-search-suggest");
+
+      searchSuggestion.addEventListener("click", (e) => {
+        if (e.target.classList.contains("item")) {
+          const content = e.target.textContent;
+          // console.log(content);
+          window.location.href = `/search/q=?${content}`;
+        }
+      });
+
       if (!searchInputValue) {
         searchSuggestion.innerHTML = "";
         return;
       }
+
       const html1 = res.suggestions
         .map((item) => {
-          return `<a class="block ml-3 mt-5">${item}</a>`;
+          return `<a href="#" class="item block hover:bg-gray-900 cursor-pointer p-3">${item}</a>`;
         })
         .join("");
 
       const html2 = res.completed
         .map((item) => {
-          return `<a href="/player/${item.id}" class="js-search-item bg-black">
+          return `<a href="/player/${checkSlugId(
+            item
+          )}" class="js-search-item bg-black">
                   <div class="mx-auto">
                       <div class="bg-black hover:bg-gray-900 p-3 cursor-pointer transition-all duration-200 relative">
                           <div class="flex items-start gap-3">
                               <div class="flex shrink-0 transition-opacity duration-200">
-                                  <img src="${item.thumbnails[0]}" alt="Video thumbnail" class="h-10 w-10 rounded object-cover">
+                                  <img src="${
+                                    item.thumbnails[0]
+                                  }" alt="Video thumbnail" class="h-10 w-10 rounded object-cover">
                               </div>
                               
                               <div class="flex-1 min-w-0">
@@ -244,4 +262,12 @@ export const searchActive = async () => {
       searchSuggestion.innerHTML = html1 + html2;
     }, 400)
   );
+};
+
+const checkSlugId = (item) => {
+  if (item.type === "song" && item.type === "video") {
+    return item.id;
+  } else {
+    return item.slug;
+  }
 };

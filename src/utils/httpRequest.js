@@ -431,3 +431,13 @@ export const getSearchSuggestion = async (searchContent) => {
     console.log(err);
   }
 };
+
+// GET SEARCH
+export const searchSongs = async (keyword) => {
+  try {
+    const res = await axiosInstance.get(`/search?q=${keyword}`);
+    return res.data;
+  } catch (error) {
+    console.error(error);
+  }
+};

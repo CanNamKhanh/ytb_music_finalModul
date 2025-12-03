@@ -33,6 +33,7 @@ import UserInfo from "../pages/userInfo";
 import { logout } from "../utils/httpRequest";
 import UpdateUserInfo, { updateSubmit } from "../pages/updateUserInfo";
 import ChangePassword, { changeSubmit } from "../pages/changePass";
+import SearchResult from "../pages/searchResult";
 
 const router = new Navigo("/");
 
@@ -85,7 +86,7 @@ const initeRouter = async () => {
     })
     .on("/player/:slug", async () => {
       document.querySelector(".js-body").innerHTML = await Player();
-      setupPlayerEvents();
+      await setupPlayerEvents();
     })
     .on("/login", async () => {
       document.querySelector(".js-body").innerHTML = Login();
@@ -119,6 +120,9 @@ const initeRouter = async () => {
       });
       await changeSubmit();
     })
+    // .on("/search", async () => {
+    //   document.querySelector(".js-body").innerHTML = await SearchResult();
+    // })
     .resolve();
 };
 export default initeRouter;

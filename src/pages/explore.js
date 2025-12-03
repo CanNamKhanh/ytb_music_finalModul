@@ -21,10 +21,10 @@ const Explore = () => {
                         <a href="/explore/moods_and_genres" class="font-bold text-4xl hover:underline cursor-pointer">Moods & genres</a>
                         <div class="js-active-btn flex items-center gap-5">
                             <a href="/explore/moods_and_genres" class="px-3 py-1 border-gray-500 rounded-full border cursor-pointer hover:bg-gray-500">More</a>
-                            <div class="js-previous-btn-wrapper w-8 h-8 border border-gray-500 rounded-full cursor-pointer flex items-center justify-center hover:bg-gray-500">
+                            <div class="js-previous-btn-wrapper-1 w-8 h-8 border border-gray-500 rounded-full cursor-pointer flex items-center justify-center hover:bg-gray-500">
                                 <i class="fa-solid fa-angle-left"></i>
                             </div>
-                            <div class="js-next-btn-wrapper w-8 h-8 border border-gray-500 rounded-full cursor-pointer flex items-center justify-center hover:bg-gray-500">
+                            <div class="js-next-btn-wrapper-1 w-8 h-8 border border-gray-500 rounded-full cursor-pointer flex items-center justify-center hover:bg-gray-500">
                                 <i class="fa-solid fa-angle-right"></i>
                             </div>
                         </div>    
@@ -44,7 +44,7 @@ const Explore = () => {
                             </div>
                         </div>    
                     </div>
-                    <div class="js-new-music-vid-list-section flex flex-col w-full flex-wrap gap-6 h-[280px] mt-5 columns-4 overflow-x-hidden hover:overflow-x-scroll"></div>
+                    <div class="js-new-music-vid-list-section-2 flex flex-col w-full flex-wrap gap-6 h-[280px] mt-5 columns-4 overflow-x-hidden hover:overflow-x-scroll"></div>
                 </div>
           </div>`;
 };
@@ -86,7 +86,7 @@ renderPagePart();
 
 //RENDER NEW VIDEO MUSIC
 export const renderNewMusicVid = async () => {
-  const container = document.querySelector(".js-new-music-vid-list-section");
+  const container = document.querySelector(".js-new-music-vid-list-section-2");
   if (!container) return;
   const data = await getNewMusicVideo();
   console.log(data);
@@ -116,8 +116,8 @@ export const renderNewMusicVid = async () => {
 
 //ARROW ACTION 1
 export const arrowAction1 = () => {
-  const nextBtn = document.querySelector(".js-next-btn-wrapper");
-  const prevBtn = document.querySelector(".js-previous-btn-wrapper");
+  const nextBtn = document.querySelector(".js-next-btn-wrapper-1");
+  const prevBtn = document.querySelector(".js-previous-btn-wrapper-1");
 
   if (!nextBtn || !prevBtn) return;
 
@@ -144,12 +144,12 @@ export const arrowAction2 = () => {
   if (!nextBtn || !prevBtn) return;
 
   nextBtn.addEventListener("click", () => {
-    const box2 = document.querySelector(".js-new-music-vid-list-section");
+    const box2 = document.querySelector(".js-new-music-vid-list-section-2");
     box2.scrollBy({ left: 330, behavior: "smooth" });
   });
 
   prevBtn.addEventListener("click", () => {
-    const box2 = document.querySelector(".js-new-music-vid-list-section");
+    const box2 = document.querySelector(".js-new-music-vid-list-section-2");
     box2.scrollBy({ left: -330, behavior: "smooth" });
   });
 };

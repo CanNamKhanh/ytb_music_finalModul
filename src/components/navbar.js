@@ -1,5 +1,5 @@
 const NavBar = () => {
-  return `<div class="js-navbar bg-black w-19 flex left-0 top-[65px] flex-col gap-5 h-[90.6vh] items-center border-r-gray-500 border fixed z-9999999999">
+  return `<div class="js-navbar bg-black w-19 flex left-0 top-[65px] flex-col gap-5 h-[90.6vh] items-center border-r-gray-500 border fixed z-999999">
             <div class="js-pages text-white mt-3 border-b border-b-gray-500 w-[90%]">
                 <a href="/" data-navigo>
                   <div class="js-wrapper text-center cursor-pointer hover:bg-gray-500 rounded-[5px] p-3">
