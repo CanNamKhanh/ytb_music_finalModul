@@ -27,8 +27,8 @@ const Header = () => {
                 <i class="fa-brands fa-chromecast text-gray-200 cursor-pointer text-2xl" title="Connect to a device"></i>
                 <i class="fa-solid fa-ellipsis-vertical js-more-btn cursor-pointer text-xl" title="Setting"></i>
                 <a href="/login" class="js-login">
-                  <button class="text-black bg-white rounded-full px-4 py-1 cursor-pointer font-medium text-[15px]">Log in</button>
-                  </a>
+                  <div class="text-black bg-white rounded-full px-4 py-1 cursor-pointer font-medium text-[15px]">Log in</div>
+                </a>
                 <div class="js-user-avt rounded-full w-10 h-10 cursor-pointer hidden">
                   <img src="https://i.imgflip.com/g92vw.jpg?a489648" class="w-15 h-10 rounded-full" alt="Avata">  
                 </div>
