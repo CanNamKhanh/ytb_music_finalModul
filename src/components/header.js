@@ -7,7 +7,7 @@ const Header = () => {
                 <div class="wrapper rounded-full w-10 h-10 flex justify-center items-center hover:bg-[#2f2e2e] cursor-pointer">
                     <i class="fa-solid fa-bars text-white cursor-pointer text-xl"></i>
                 </div>
-                <a href="/">
+                <a href="/" data-navigo>
                     <img class="logo style-scope ytmusic-logo cursor-pointer" alt="" src="//music.youtube.com/img/on_platform_logo_dark.svg">
                 </a>
               </div>
@@ -26,7 +26,7 @@ const Header = () => {
             <div class="auth-service text-white flex justify-center items-center gap-3 mr-30">
                 <i class="fa-brands fa-chromecast text-gray-200 cursor-pointer text-2xl" title="Connect to a device"></i>
                 <i class="fa-solid fa-ellipsis-vertical js-more-btn cursor-pointer text-xl" title="Setting"></i>
-                <a href="/login" class="js-login">
+                <a href="/login" class="js-login" data-navigo>
                   <div class="text-black bg-white rounded-full px-4 py-1 cursor-pointer font-medium text-[15px]">Log in</div>
                 </a>
                 <div class="js-user-avt rounded-full w-10 h-10 cursor-pointer hidden">
@@ -159,11 +159,11 @@ const renderProfileMenu = async () => {
                               <div class="email">
                                 <div class="username font-bold text-[14px]">${data.name}</div>
                                 <div class="user-email font-bold text-[14px] mb-2">${data.email}</div>
-                                <a class="cursor-pointer text-blue-500 font-bold text-[14px]">Quản lý tài khoản của bạn</a>
+                                <a class="cursor-pointer text-blue-500 font-bold text-[14px]" data-navigo>Quản lý tài khoản của bạn</a>
                               </div>
                             </div>
                             <hr class="text-gray-500">
-                            <a href="/user-info" class="js-logout cursor-pointer hover:bg-[#746d6d] p-3 flex items-center gap-3">
+                            <a href="/user-info" class="js-logout cursor-pointer hover:bg-[#746d6d] p-3 flex items-center gap-3" data-navigo>
                               <i class="fa-regular fa-user text-white"></i>
                               <div>Thông tin tài khoản</div>
                             </a>
@@ -219,7 +219,7 @@ export const searchActive = async () => {
 
       const html1 = res.suggestions
         .map((item) => {
-          return `<a href="#" class="item block hover:bg-gray-900 cursor-pointer p-3">${item}</a>`;
+          return `<a href="#" class="item block hover:bg-gray-900 cursor-pointer p-3 data-navigo">${item}</a>`;
         })
         .join("");
 
@@ -227,7 +227,7 @@ export const searchActive = async () => {
         .map((item) => {
           return `<a href="/player/${checkSlugId(
             item
-          )}" class="js-search-item bg-black">
+          )}" class="js-search-item bg-black" data-navigo>
                   <div class="mx-auto">
                       <div class="bg-black hover:bg-gray-900 p-3 cursor-pointer transition-all duration-200 relative">
                           <div class="flex items-start gap-3">
