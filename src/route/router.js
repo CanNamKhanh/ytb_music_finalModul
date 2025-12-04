@@ -86,7 +86,7 @@ const initeRouter = async () => {
     })
     .on("/player/:slug", async () => {
       document.querySelector(".js-body").innerHTML = await Player();
-      await setupPlayerEvents();
+      setupPlayerEvents();
     })
     .on("/login", async () => {
       document.querySelector(".js-body").innerHTML = Login();

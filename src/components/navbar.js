@@ -1,25 +1,25 @@
 const NavBar = () => {
   return `<div class="js-navbar bg-black w-19 flex left-0 top-[65px] flex-col gap-5 h-[90.6vh] items-center border-r-gray-500 border fixed z-999999">
             <div class="js-pages text-white mt-3 border-b border-b-gray-500 w-[90%]">
-                <a href="/" data-navigo>
+                <a href="/" data-navigo class="home-icon">
                   <div class="js-wrapper text-center cursor-pointer hover:bg-gray-500 rounded-[5px] p-3">
                       <i class="fa-solid fa-house text-2xl"></i>
                       <p class="text-[10px]">Home</p>
                   </div>
                 </a>
-                <a href="/explore" data-navigo>
+                <a href="/explore" data-navigo class="explore-icon">
                   <div class="js-wrapper text-center cursor-pointer hover:bg-gray-500 rounded-[5px] p-3">
                       <i class="fa-regular fa-compass text-2xl"></i>
                       <p class="text-[10px]">Explore</p>
                   </div>
                 </a>
-                <a href="/library" data-navigo>
+                <a href="/library" data-navigo class="library-icon">
                   <div class="js-wrapper text-center cursor-pointer hover:bg-gray-500 rounded-[5px] p-3">
                       <i class="fa-regular fa-bookmark text-2xl"></i>
                       <p class="text-[10px]">Library</p>
                   </div>
                 </a>
-                <a href="/upgrade" data-navigo>
+                <a href="/upgrade" data-navigo class="upgrade-icon">
                   <div class="js-wrapper text-center cursor-pointer hover:bg-gray-500 rounded-[5px] p-3">
                       <i class="fa-regular fa-circle-play text-2xl"></i>
                       <p class="text-[10px]">Upgrade</p>
