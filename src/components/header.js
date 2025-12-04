@@ -165,11 +165,11 @@ const renderProfileMenu = async () => {
                             <hr class="text-gray-500">
                             <a href="/user-info" class="js-logout cursor-pointer hover:bg-[#746d6d] p-3 flex items-center gap-3" data-navigo>
                               <i class="fa-regular fa-user text-white"></i>
-                              <div data-navigo>Thông tin tài khoản</div>
+                              <div>Thông tin tài khoản</div>
                             </a>
                             <div class="js-logout-btn cursor-pointer hover:bg-[#746d6d] p-3 flex items-center gap-3 rounded-b-[10px]">
                               <i class="fa-solid fa-arrow-right-from-bracket text-white"></i>
-                              <div data-navigo>Đăng xuất</div>
+                              <div>Đăng xuất</div>
                             </div>
                            `;
   }
